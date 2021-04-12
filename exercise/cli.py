@@ -51,12 +51,6 @@ def validate_command(config_content: Any, schema_content: Any) -> None:
     type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True),
     help="Config file",
 )
-@click.option(
-    "--schema",
-    required=True,
-    type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True),
-    help="Schema file",
-)
 def execute(config: str) -> None:
     with open(config) as config_file:
         config_content = yaml.safe_load(config_file)
@@ -65,11 +59,10 @@ def execute(config: str) -> None:
 
 def execute_command(config_content: Any) -> None:
     config = Element(config_content)
-    print(config)
     print(str(config.version))
     print(str(config.workflows))
-    print(config.workflows.build_and_test)
-    print(config.jobs.build.docker[0].auth.password)
+    print(config.workflows[0])
+    print(config.jobs[0].docker[0].auth.password)
 
 
 if __name__ == "__main__":
