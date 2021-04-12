@@ -1,0 +1,28 @@
+#config.yaml
+version: 2.1.1
+# Define the jobs we want to run for this project
+jobs:
+  - name: build
+    dockerd:
+      - image: circleci/<language>:<version TAG>
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      - run: echo "this is the build job"
+  - name: test
+    docker:
+      - image: circleci/<language>:<version TAG>
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      - run: echo "this is the test job"
+# Orchestrate our job run sequence
+workflows:
+  - name: build_and_test
+    jobs:
+      - build
+      - test

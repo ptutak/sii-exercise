@@ -1,5 +1,5 @@
-import re
 import os
+import re
 from typing import Any
 
 
@@ -29,6 +29,10 @@ class Element:
 
     @property
     def value(self) -> Any:
+        if self._attributes:
+            return self._attributes
+        if self._iterables:
+            return self._iterables
         if isinstance(self._value, str):
             self_value = self._value
             for item in self.VARIABLE_PATTERN.finditer(self._value):
@@ -38,6 +42,12 @@ class Element:
                     self_value = self_value.replace(f"${variable}", env_variable)
             return self_value
         return self._value
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Element):
+            return NotImplemented
+
+        return self.value == other.value
 
     def __str__(self) -> str:
         if self._attributes:

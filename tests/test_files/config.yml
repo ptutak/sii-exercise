@@ -2,7 +2,7 @@
 version: 2.1.1
 # Define the jobs we want to run for this project
 jobs:
-  build:
+  - name: build
     docker:
       - image: circleci/<language>:<version TAG>
         auth:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run: echo "this is the build job"
-  test:
+  - name: test
     docker:
       - image: circleci/<language>:<version TAG>
         auth:
@@ -22,7 +22,7 @@ jobs:
       - run: echo "this is the test job"
 # Orchestrate our job run sequence
 workflows:
-  build_and_test:
+  - name: build_and_test
     jobs:
       - build
       - test

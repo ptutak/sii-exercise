@@ -37,7 +37,7 @@ def validate_command(config_content: Any, schema_content: Any) -> None:
     validator = Validator(schema_content)
     result = validator.validate(config_content)
 
-    print("Validate result: ", result)
+    print("Validate result:", result)
     if not result:
         print("Errors:")
         print(validator.errors)
@@ -57,12 +57,9 @@ def validate_command(config_content: Any, schema_content: Any) -> None:
     type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True),
     help="Schema file",
 )
-def execute(config: str, schema: str) -> None:
+def execute(config: str) -> None:
     with open(config) as config_file:
         config_content = yaml.safe_load(config_file)
-    with open(schema) as schema_file:
-        schema_content = yaml.safe_load(schema_file)
-    validate_command(config_content, schema_content)
     execute_command(config_content)
 
 
@@ -76,4 +73,4 @@ def execute_command(config_content: Any) -> None:
 
 
 if __name__ == "__main__":
-    execute()
+    cli()
