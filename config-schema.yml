@@ -1,0 +1,44 @@
+version:
+  type: string
+jobs:
+  type: dict
+  allow_unknown:
+    type: dict
+    schema:
+      docker:
+        type: list
+        default: []
+        schema:
+          type: dict
+          schema:
+            image:
+              type: string
+            auth:
+              type: dict
+              schema:
+                username:
+                  type: string
+                password:
+                  type: string
+      steps:
+        type: list
+        default: []
+        schema:
+          type:
+            - string
+            - list
+          schema:
+            type: dict
+            schema:
+              run:
+                type: string
+workflows:
+  type: dict
+  allow_unknown:
+    type: dict
+    schema:
+      jobs:
+        type: list
+        default: []
+        schema:
+          type: string
