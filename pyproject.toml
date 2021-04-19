@@ -34,4 +34,8 @@ basepython = python3
 commands =
     poetry install
     pytest
+
+[testenv:lint]
+basepython = python3
+commands = flake8 exercise
 """
